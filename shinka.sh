@@ -89,8 +89,8 @@ release()
 
 bundle()
 {
-	echo "$1-$2-$3.zip"
-	git archive HEAD --format zip -o "$1-$2-$3.zip"
+	git archive HEAD:src --format zip -o "$1-$2-$3.zip"
+	echo "Release bundled in $1-$2-$3.zip"
 }
 
 case $1 in
