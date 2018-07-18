@@ -7,13 +7,13 @@ class Shinka_Core_Manager_StylesheetManager extends Shinka_Core_Manager_Manager
     /**
      * Create templates from files in the given directory
      *
-     * @param DB_Base $db
      * @param Shinka_Core_Entity_Stylesheet|Shinka_Core_Entity_Stylesheet[] $stylesheets
      * @return void
      */
-    public static function create(DB_Base $db, $stylesheets)
+    public static function create($stylesheets)
     {
         require_once MYBB_ROOT . "admin/inc/functions_themes.php";
+        global $db;
 
         foreach (self::toArray($stylesheets) as $stylesheet) {
             $sanitized = $stylesheet->toArray();
@@ -26,12 +26,12 @@ class Shinka_Core_Manager_StylesheetManager extends Shinka_Core_Manager_Manager
     }
 
     /**
-     * @param DB_Base $db
      * @param Shinka_Core_Entity_Stylesheet|Shinka_Core_Entity_Stylesheet[] $stylesheets
      */
-    public function destroy(DB_Base $db, $stylesheets)
+    public function destroy($stylesheets)
     {
         require_once MYBB_ROOT . "admin/inc/functions_themes.php";
+        global $db;
 
         foreach (self::toArray($stylesheets) as $stylesheet) {
             $tid = $stylesheet->tid;

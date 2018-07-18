@@ -2,16 +2,16 @@
 
 class Shinka_News_Service_InstallService
 {
-
     public static $tables = array(
         'news' => array(
             'nid INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
             'tid INT(10) UNSIGNED',
             'uid INT(10) UNSIGNED NOT NULL',
-            'title VARCHAR(255) NOT NULL',
+            'headline VARCHAR(255) NOT NULL',
             'text VARCHAR(255) NOT NULL',
             'tags VARCHAR(255) NOT NULL',
-            'important BOOL NOT NULL DEFAULT FALSE',
+            'pinned BOOL NOT NULL DEFAULT FALSE',
+            "status VARCHAR(255) NOT NULL DEFAULT 'APPROVED'",
             'updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW()',
             'created_at TIMESTAMP NOT NULL DEFAULT NOW()',
             'PRIMARY KEY (nid)',
@@ -112,25 +112,28 @@ class Shinka_News_Service_InstallService
         'asset_dir' => MYBB_ROOT . "inc/plugins/Shinka/News/resources/templates",
     );
 
-    public static function handle(DB_Base $db)
+    public static function handle()
     {
         require_once MYBB_ROOT . "inc/adminfunctions_templates.php";
 
         $tables = new Shinka_Core_Entity_Table('news', self::$tables['news']);
+
         $setting_group = Shinka_Core_Entity_SettingGroup::fromArray(self::$settinggroup);
+
         $settings = array_map(function ($setting) {
             return Shinka_Core_Entity_Setting::fromArray($setting);
         }, self::$settings);
+
         $template_groups = Shinka_Core_Entity_TemplateGroup::fromArray(self::$template_group);
         $stylesheets = Shinka_Core_Entity_Stylesheet::fromDirectory(MYBB_ROOT . "inc/plugins/Shinka/News/resources/themestylesheets");
 
-        Shinka_Core_Manager_TableManager::create($db, $tables);
+        Shinka_Core_Manager_TableManager::create($tables);
 
-        $gid = Shinka_Core_Manager_SettingGroupManager::create($db, $setting_group);
-        Shinka_Core_Manager_SettingManager::create($db, $settings, $gid);
+        $gid = Shinka_Core_Manager_SettingGroupManager::create($setting_group);
+        Shinka_Core_Manager_SettingManager::create($settings, $gid);
 
-        Shinka_Core_Manager_TemplateGroupManager::create($db, $template_groups);
-        Shinka_Core_Manager_StylesheetManager::create($db, $stylesheets);
+        Shinka_Core_Manager_TemplateGroupManager::create($template_groups);
+        Shinka_Core_Manager_StylesheetManager::create($stylesheets);
 
         find_replace_templatesets(
             "index",
