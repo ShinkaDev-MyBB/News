@@ -36,8 +36,19 @@ make_symlinks()
 	then
 		ln -s "$PWD/src/news.php" "$MYBB_BASE/news.php" 
 		echo "Linked news.php"
+		
+		ln -s "$PWD/src/inc/plugins/news.php" "$MYBB_BASE/inc/plugins/news.php"
+		echo "Linked inc/plugins/news.php"
+		
+		ln -s "$PWD/src/inc/languages/english/news.lang.php" "$MYBB_BASE/inc/languages/english/news.lang.php"
+		echo "Linked inc/languages/news.lang.php"
+		
+		ln -s "$PWD/src/inc/languages/english/admin/news.lang.php" "$MYBB_BASE/inc/languages/english/admin/news.lang.php"
+		echo "Linked inc/languages/english/admin/news.lang.php"
+		
 		ln -s "$PWD/src/inc/plugins/MybbStuff" "$MYBB_BASE/inc/plugins/MybbStuff"
 		echo "Linked inc/plugins/MybbStuff"
+		
 		ln -s "$PWD/src/inc/plugins/Shinka" "$MYBB_BASE/inc/plugins/Shinka"
 		echo "Linked inc/plugins/Shinka"
 	else
@@ -51,11 +62,22 @@ destroy_symlinks()
 	if [ $1 ]
 	then
 		rm "$MYBB_BASE/news.php"
-		echo "Removed news.php"
+		echo "Unlinked news.php"
+		
+		rm "$MYBB_BASE/inc/plugins/news.php"
+		echo "Unlinked inc/plugins/news.php"
+		
+		rm "$MYBB_BASE/inc/languages/english/news.lang.php"
+		echo "Unlinked inc/languages/english/news.lang.php"
+		
+		rm "$MYBB_BASE/inc/languages/english/admin/news.lang.php"
+		echo "Unlinked inc/languages/english/admin/news.lang.php"
+		
 		rm -R "$MYBB_BASE/inc/plugins/MybbStuff/"
-		echo "Removed inc/plugins/MybbStuff/"
+		echo "Unlinked inc/plugins/MybbStuff/"
+		
 		rm -R "$MYBB_BASE/inc/plugins/Shinka/"
-		echo "Removed inc/plugins/Shinka/"
+		echo "Unlinked inc/plugins/Shinka/"
 	else
 		unlink_usage
 	fi	

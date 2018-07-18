@@ -21,7 +21,7 @@ class Shinka_News_Service_InstallService
     public static $settinggroup = array(
         "name" => "newsgroup",
         "title" => "News",
-        "description" => "News",
+        "description" => "News description",
         "isdefault" => 0,
     );
 
@@ -120,9 +120,11 @@ class Shinka_News_Service_InstallService
 
         $setting_group = Shinka_Core_Entity_SettingGroup::fromArray(self::$settinggroup);
 
-        $settings = array_map(function ($setting) {
-            return Shinka_Core_Entity_Setting::fromArray($setting);
-        }, self::$settings);
+        $settings = self::$settings;
+        foreach ($settings as $ndx => &$setting) {
+            $setting['disporder'] = $ndx;
+            $setting = Shinka_Core_Entity_Setting::fromArray($setting);
+        }
 
         $template_groups = Shinka_Core_Entity_TemplateGroup::fromArray(self::$template_group);
         $stylesheets = Shinka_Core_Entity_Stylesheet::fromDirectory(MYBB_ROOT . "inc/plugins/Shinka/News/resources/themestylesheets");

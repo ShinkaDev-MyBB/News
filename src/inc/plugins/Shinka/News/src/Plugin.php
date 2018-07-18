@@ -18,7 +18,7 @@ function news_info()
     return array(
         'name' => $lang->news,
         'description' => $lang->news_description,
-        'website' => 'https://github.com/ShinkaDev-MyBB/mybb-news',
+        'website' => 'https://github.com/ShinkaDev-MyBB/News',
         'author' => 'Shinka',
         'authorsite' => 'https://github.com/ShinkaDev-MyBB',
         "codename" => "news",

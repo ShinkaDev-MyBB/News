@@ -1,6 +1,6 @@
 <?php
 
-class Shinka_Core_Entity_Stylesheet
+class Shinka_Core_Entity_User extends Shinka_Core_Entity_Entity
 {
     /** @var int  */
     public $uid;
@@ -27,7 +27,9 @@ class Shinka_Core_Entity_Stylesheet
 
     public function fromArray(array $arr)
     {
-        $this->uid = $arr['uid'];
-        $this->username = $arr['username'];
+        return new Shinka_Core_Entity_User(
+            $arr['uid'],
+            $arr['username']
+        );
     }
 }

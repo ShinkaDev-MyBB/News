@@ -1,7 +1,12 @@
 <?php
 
-class Shinka_Core_Entity_Stylesheet
+class Shinka_Core_Entity_Stylesheet extends Shinka_Core_Entity_Entity
 {
+    public const DEFAULTS = array(
+        'attachedto' => '',
+        'tid' => 1
+    );
+
     /** @var string  */
     public $stylesheet;
 
@@ -17,12 +22,15 @@ class Shinka_Core_Entity_Stylesheet
     /**
      * Store name and table definitions
      */
-    public function __construct(string $stylesheet, string $name, $attachedto = '', $tid = 1)
+    public function __construct(string $stylesheet, string $name, 
+        $attachedto = self::DEFAULTS['attachedto'], $tid = self::DEFAULTS['tid'])
     {
         $this->stylesheet = $stylesheet;
         $this->name = $name;
         $this->attachedto = $attachedto;
         $this->tid = $tid;
+
+        $this->setDefaults(self::DEFAULTS);
     }
 
     public function toArray()
@@ -31,6 +39,7 @@ class Shinka_Core_Entity_Stylesheet
             'stylesheet' => $this->stylesheet,
             'name' => $this->name,
             'tid' => $this->tid,
+            'attachedto' => $this->attachedto
         );
     }
 
