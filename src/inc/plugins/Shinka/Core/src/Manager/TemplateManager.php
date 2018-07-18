@@ -7,14 +7,15 @@ class Shinka_Core_Manager_TemplateManager extends Shinka_Core_Manager_Manager
     /**
      * Create templates from files in the given directory
      *
-     * @param DB_Base $db
      * @param string  $asset_dir
      * @param string  $sid
      * @param string  $version
      * @return void
      */
-    public static function create(DB_Base $db, string $asset_dir = '', string $sid = '-2', string $version = '')
+    public static function create(string $asset_dir = '', string $sid = '-2', string $version = '')
     {
+        global $db;
+
         // Slice out '.' and '..'
         $files = array_slice(scandir($asset_dir), 2);
 
@@ -36,8 +37,10 @@ class Shinka_Core_Manager_TemplateManager extends Shinka_Core_Manager_Manager
     /**
      * Delete templates with the given title prefix
      */
-    public function destroy(DB_Base $db, string $prefix)
+    public function destroy(string $prefix)
     {
+        global $db;
+
         $db->delete_query(self::$table, "`title` LIKE '{$prefix}_%' OR `title` = '{$prefix}'");
     }
 }

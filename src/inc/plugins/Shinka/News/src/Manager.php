@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Manages the creating, fetching and manipulation of objects in the database.
+ * Manages objects in database
  *
  * @package Shinka\News
  */
-class Shinka_News_Manager extends Shinka_Core_Manager
+class Shinka_News_Manager extends Shinka_Core_Manager_Manager
 {
     /** @var string */
     private static $table = "news";
 
     /** @var string Base query for news */
-    private static $query = 'SELECT news.nid, news.title, news.text, news.tid, news.uid, news.tags, news.important, ' .
-        'user.uid, user.username, user.usergroup, user.displaygroup, thread.subject ' .
+    private static $query = 'SELECT news.nid, news.headline, news.text, news.tid, news.uid, news.tags, news.pinned, ' .
+        'news.status, user.uid, user.username, user.usergroup, user.displaygroup, thread.subject ' .
         'FROM ' . TABLE_PREFIX . 'news news ' .
         'LEFT JOIN ' . TABLE_PREFIX . 'threads thread ON thread.tid = news.tid ' .
         'INNER JOIN ' . TABLE_PREFIX . 'users user ON user.uid = news.uid ';
@@ -20,51 +20,64 @@ class Shinka_News_Manager extends Shinka_Core_Manager
     /**
      * @return
      */
-    public function createItem(Shinka_News_Entity_News $news)
+    public static function create(Shinka_News_Entity_News $newses)
     {
-        return $this->db->insert_query(self::$table, $news->toArray());
-    }
-
-    public function destroyItem(integer $nid)
-    {
-        return $this->db->delete_query(self::$table, "nid = $nid", 1);
-    }
-
-    public function createItems(array $news)
-    {
-        foreach ($news as $n) {
-            $this->createItem($n);
+        global $db;
+        foreach (self::toArray($newses) as $news) {
+            $db->insert_query(self::$table, $news->toArray());
         }
     }
 
-    public function destroyItems(array $news)
+    public static function destroy(array $nids)
     {
+        global $db;
+        foreach (self::toArray($nids) as $nid) {
+            $db->delete_query("nid = $nid", 1);
+        }
+    }
+
+    public static function destroyItems(array $news)
+    {
+        global $db;
         foreach ($news as $n) {
             $this->destroyItem($n);
         }
     }
 
-    public function findSimple(integer $id, string $fields = "*")
+    public static function findSimple(integer $nid, string $fields = "*")
     {
-        return $this->db->simple_select(self::$table, $fields, "nid = $nid", array(
+        global $db;
+        return $db->simple_select($fields, "nid = $nid", array(
             "limit" => 1,
         ));
     }
 
-    public function find(integer $nid)
+    public static function find(integer $nid)
     {
+        global $db;
         $query = self::$query . " WHERE news.nid = $nid";
-        return $this->db->write_query(self::$table, self::$query);
+        return $db->write_query(self::$query);
     }
 
-    public function findByTag(integer $id, string $fields = "*")
+    /**
+     * @param string|string[] $tags
+     */
+    public static function findByTag($tags, string $fields = "*")
     {
+        global $db;
         $query = self::$query . " WHERE news.nid = $nid";
-        return $this->db->write_query(self::$table, self::$query);
+        return $db->write_query(self::$query);
     }
 
-    public function count()
+    public static function all()
     {
-        return $this->db->simple_select(self::$table, "COUNT(news.nid)", array());
+        global $db;
+        return $db->write_query(self::$query);
+    }
+
+    public static function count()
+    {
+        global $db;
+        return $db->simple_select("COUNT(news.nid)", array());
     }
 }
