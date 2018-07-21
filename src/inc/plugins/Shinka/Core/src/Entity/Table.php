@@ -19,12 +19,12 @@ class Shinka_Core_Entity_Table extends Shinka_Core_Entity_Entity
     public function toArray()
     {
         return array(
-            'name' => $this->name,
-            'definitions' => $this->definitions,
+            'name' => $name,
+            'definitions' => $definitions,
         );
     }
 
-    public static function fromArray(array $arr)
+    public function fromArray(array $arr)
     {
         return new Shinka_Core_Entity_Table(
             $arr['name'],

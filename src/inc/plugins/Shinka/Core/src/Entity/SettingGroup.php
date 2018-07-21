@@ -39,7 +39,7 @@ class Shinka_Core_Entity_SettingGroup extends Shinka_Core_Entity_Entity
             'title' => $this->title,
             'description' => $this->description,
             'disporder' => $this->disporder,
-            'isdefault' => $this->isdefault
+            'isdefault' => $this->isdefault,
         );
     }
 
@@ -50,8 +50,7 @@ class Shinka_Core_Entity_SettingGroup extends Shinka_Core_Entity_Entity
             $arr['title'], 
             $arr['description'], 
             $arr['disporder'], 
-            $arr['isdefault'],
-            $arr['gid']
+            $arr['isdefault']
         );
     }
 }

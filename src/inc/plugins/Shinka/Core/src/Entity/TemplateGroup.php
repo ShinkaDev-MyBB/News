@@ -12,7 +12,7 @@ class Shinka_Core_Entity_TemplateGroup extends Shinka_Core_Entity_Entity
     /** @var string */
     public $title;
 
-    /** @var int */
+    /** @var integer */
     public $isdefault = 1;
 
     /** @var string */

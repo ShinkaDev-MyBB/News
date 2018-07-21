@@ -43,7 +43,7 @@ class Shinka_Core_Entity_Stylesheet extends Shinka_Core_Entity_Entity
         );
     }
 
-    public static function fromDirectory(string $dir)
+    public static function fromDirectory($dir)
     {
         $files = array_slice(scandir($dir), 2);
 
@@ -55,15 +55,5 @@ class Shinka_Core_Entity_Stylesheet extends Shinka_Core_Entity_Entity
         }
 
         return $stylesheets;
-    }
-
-    public static function fromArray(array $arr)
-    {
-        return new Shinka_Core_Entity_Stylesheet(
-            $arr['stylesheet'],
-            $arr['name'],
-            $arr['attachedto'],
-            $arr['tid']
-        );
     }
 }

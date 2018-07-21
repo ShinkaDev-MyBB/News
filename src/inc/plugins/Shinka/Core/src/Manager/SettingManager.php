@@ -9,11 +9,11 @@ class Shinka_Core_Manager_SettingManager extends Shinka_Core_Manager_Manager
      * @param int $gid
      * @return void
      */
-    public static function create($settings, $gid = null)
+    public static function create($settings, int $gid)
     {
         global $db;
 
-        foreach (self::toArray($settings) as $ndx => $setting) {
+        foreach ((array) $settings as $ndx => $setting) {
             $setting->gid = $setting->gid ?: $gid;
             $setting->disporder = $setting->disporder ?: $ndx;
 
@@ -24,11 +24,11 @@ class Shinka_Core_Manager_SettingManager extends Shinka_Core_Manager_Manager
     /**
      * @param string|string[] $prefixes
      */
-    public static function destroy($prefixes)
+    public function destroy($prefixes)
     {
         global $db;
 
-        foreach (self::toArray($prefixes) as $prefix) {
+        foreach ((array) $prefixes as $prefix) {
             $db->delete_query(self::$table, "`name` LIKE '{$prefix}_%'");
         }
     }
