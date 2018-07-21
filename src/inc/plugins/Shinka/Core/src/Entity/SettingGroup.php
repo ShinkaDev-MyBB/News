@@ -1,7 +1,13 @@
 <?php
 
-class Shinka_Core_Entity_SettingGroup
+class Shinka_Core_Entity_SettingGroup extends Shinka_Core_Entity_Entity
 {
+    public const DEFAULTS = array(
+        "disporder" => 5,
+        "isdefault" => 0,
+        "gid" => null
+    );
+
     public $name;
     public $title;
     public $description;
@@ -12,7 +18,9 @@ class Shinka_Core_Entity_SettingGroup
     /**
      * Stores name and table definitions
      */
-    public function __construct(string $name, string $title, string $description, $disporder = 5, $isdefault = 0, $gid = null)
+    public function __construct(string $name, string $title, string $description, 
+        $disporder = self::DEFAULTS['disporder'], $isdefault = self::DEFAULTS['isdefault'], 
+        $gid = self::DEFAULTS['gid'])
     {
         $this->name = $name;
         $this->title = $title;
@@ -20,6 +28,8 @@ class Shinka_Core_Entity_SettingGroup
         $this->disporder = $disporder;
         $this->isdefault = $isdefault;
         $this->gid = $gid;
+
+        $this->setDefaults(self::DEFAULTS);
     }
 
     public function toArray()
@@ -35,6 +45,12 @@ class Shinka_Core_Entity_SettingGroup
 
     public static function fromArray(array $arr)
     {
-        return new Shinka_Core_Entity_SettingGroup($arr['name'], $arr['title'], $arr['description'], $arr['disporder'], $arr['isdefault']);
+        return new Shinka_Core_Entity_SettingGroup(
+            $arr['name'], 
+            $arr['title'], 
+            $arr['description'], 
+            $arr['disporder'], 
+            $arr['isdefault']
+        );
     }
 }

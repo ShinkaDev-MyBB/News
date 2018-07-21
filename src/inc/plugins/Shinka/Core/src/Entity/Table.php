@@ -2,7 +2,7 @@
 /**
  * Database table
  */
-class Shinka_Core_Entity_Table
+class Shinka_Core_Entity_Table extends Shinka_Core_Entity_Entity
 {
     public $name;
     public $definitions;
@@ -10,7 +10,7 @@ class Shinka_Core_Entity_Table
     /**
      * Stores name and table definitions
      */
-    public function __construct($name, $definitions)
+    public function __construct(string $name, array $definitions)
     {
         $this->name = $name;
         $this->definitions = $definitions;
@@ -26,7 +26,9 @@ class Shinka_Core_Entity_Table
 
     public function fromArray(array $arr)
     {
-        $this->name = $arr['name'];
-        $this->definitions = $arr['definitions'];
+        return new Shinka_Core_Entity_Table(
+            $arr['name'],
+            $arr['definitions']
+        );
     }
 }

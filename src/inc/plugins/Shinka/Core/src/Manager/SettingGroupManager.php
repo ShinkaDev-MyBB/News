@@ -8,7 +8,7 @@ class Shinka_Core_Manager_SettingGroupManager extends Shinka_Core_Manager_Manage
      * @param Shinka_Core_Entity_SettingGroup $setting_group
      * @return int GID of created setting group
      */
-    public static function create($setting_group)
+    public static function create(Shinka_Core_Entity_SettingGroup $setting_group)
     {
         global $db;
 
